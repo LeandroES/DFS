@@ -6,10 +6,64 @@
 //  Copyright © 2020 Leandro Igor Estrada Santos. All rights reserved.
 //
 
-#include <iostream>
+#include<stdio.h>
+#include<string.h>
+#include <vector>
+#include <stack>
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+#include <iostream>
+ 
+using namespace std;
+#define MAX  100
+ 
+vector<int> ady[MAX];
+ bool visitado[MAX];
+ 
+
+void dfs(){
+   int ini;
+   printf("Nodo raiz: ");
+   scanf( "%d" , &ini );
+   
+   memset(visitado, 0, sizeof(visitado));
+
+   stack<int> S;
+   S.push(ini);
+   visitado[ini] = true;
+
+   while(!S.empty()){
+     int actual = S.top();
+     S.pop();
+     visitado[actual] = true;
+
+     for( int i = 0 ; i < ady[ actual ].size() ; ++i ){
+       
+       if( !visitado[ ady[ actual ][ i ] ] ){
+         printf("%d --> %d\n" , actual , ady[ actual ][ i ] );
+         S.push( ady[ actual ][ i ] );
+       }
+     }
+
+   }
+  
+ 
+ 
 }
+ 
+int main() {
+   int V , E , x , y;
+   scanf( "%d %d" , &V , &E ); //Numero de vertices y numero de aristas
+ 
+ 
+   for( int i = 1 ; i <= E ; ++i ){
+       scanf( "%d %d" , &x , &y );  //Origen y destino
+ 
+       ady[ x ].push_back( y );
+       ady[ y ].push_back( x );
+   }
+ 
+   dfs();
+ 
+}
+
+
